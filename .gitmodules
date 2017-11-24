@@ -1,0 +1,3 @@
+[submodule "lbSwarm"]
+	path = lbSwarm
+	url = https://github.com/ammarqqqq/lbSwarm.git

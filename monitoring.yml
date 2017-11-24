@@ -1,0 +1,41 @@
+version: '3'
+
+networks:
+  portainer:
+    external: false
+  loadbalancer:
+    external: true
+
+services:
+
+  portainer:
+    image: portainer/portainer
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 9000:9000
+    deploy:
+      mode: replicated
+      replicas: 3
+      placement:
+        constraints: [node.role == manager]
+    command: -H unix:///var/run/docker.sock
+    networks:
+      #- proxy
+      - portainer
+
+  viz:
+    image: dockersamples/visualizer
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    deploy:
+      mode: replicated
+      replicas: 3
+      placement:
+        constraints: [node.role == manager]
+    networks:
+      #- proxy
+      - portainer
+    ports:
+      - 9090:8080
+    restart: always

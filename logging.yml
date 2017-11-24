@@ -1,0 +1,26 @@
+version: '3'
+
+networks:
+  portainer:
+    external: false
+
+services:
+
+elk:
+  image: fintechinnovation/elk
+  build: ./elk
+  network_mode: host
+  deploy:
+    mode: replicated
+    replicas: 3
+    placement:
+      constraints: [node.role == manager]
+  ports:
+    - "5601:5601"
+    - "9200:9200"
+    - "5000:5000"
+    - "5044:5044"
+  networks:
+    #- proxy
+    - portainer
+  restart: always

@@ -1,0 +1,45 @@
+version: '3'
+networks:
+  Frontendsvc:
+    external: false
+
+services:
+  web:
+    image: fintechinnovation/web
+    build: ./web
+    deploy:
+      mode: replicated
+      replicas: 3
+      placement:
+        constraints: [node.role == manager]
+    networks:
+      #- proxy
+      - Frontendsvc
+    environment:
+      SERVICE_NAME: web
+      SERVICE_TAGS: production
+    ports:
+      - "81:443"
+    hostname: web
+    domainname: monifair.com
+    restart: always
+
+  backofficeweb:
+    image: fintechinnovation/backofficeweb
+    build: ./backofficeweb
+    deploy:
+      mode: replicated
+      replicas: 3
+      placement:
+        constraints: [node.role == manager]
+    restart: always
+    environment:
+      SERVICE_NAME: backofficeweb
+      SERVICE_TAGS: production
+    networks:
+      #- proxy
+      - Frontendsvc
+    ports:
+      - "84:443"
+    hostname: backofficeweb
+    domainname: monifair.com
