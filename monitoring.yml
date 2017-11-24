@@ -3,7 +3,7 @@ version: '3'
 networks:
   monitoring_default:
     external: false
-  loadbalancer:
+  loadbalancer_default:
     external: true
 
 services:
@@ -21,7 +21,7 @@ services:
         constraints: [node.role == manager]
     command: -H unix:///var/run/docker.sock
     networks:
-      #- proxy
+      - loadbalancer_default
       - monitoring_default
 
   viz:
@@ -34,7 +34,7 @@ services:
       placement:
         constraints: [node.role == manager]
     networks:
-      #- proxy
+      - loadbalancer_default
       - monitoring_default
     ports:
       - 9090:8080

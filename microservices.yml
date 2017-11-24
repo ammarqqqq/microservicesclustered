@@ -3,7 +3,7 @@ version: '3'
 networks:
   microservices_default:
     external: false
-  loadbalancer:
+  loadbalancer_default:
     external: true
 
 services:
@@ -17,7 +17,7 @@ services:
         constraints: [node.role == manager]
     networks:
       - microservices_default
-      #-loadbalancer
+      - loadbalancer_default
     environment:
       SERVICE_NAME: authenticationservice
       SERVICE_TAGS: production
@@ -35,6 +35,14 @@ services:
   backofficeservice:
     image: fintechinnovation/backofficeservice
     build: ./backofficeservice
+    deploy:
+      mode: replicated
+      replicas: 3
+      placement:
+        constraints: [node.role == manager]
+    networks:
+      - microservices_default
+      - loadbalancer_default
     environment:
       SERVICE_NAME: backofficeservice
       SERVICE_TAGS: production
@@ -60,6 +68,14 @@ services:
     restart: always
     ports:
       - "27017"
+    deploy:
+      mode: replicated
+      replicas: 3
+      placement:
+        constraints: [node.role == manager]
+    networks:
+      - microservices_default
+      - loadbalancer_default
     environment:
       SERVICE_NAME: backofficemongo
       SERVICE_TAGS: production
@@ -75,11 +91,13 @@ services:
         constraints: [node.role == manager]
     networks:
       - microservices_default
+      - loadbalancer_default
     environment:
       SERVICE_NAME: userandaccountservice
       SERVICE_TAGS: production
       NODE_ENV: development
       CONSUL_ADDRESS: consul:8500
+      DNSDOMAIN: ${DNSDOMAIN}
       TRACE_SERVICE_NAME: userandaccountservice
       TRACE_API_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NmY0ZDE1ZTg2OTYyMzg2NzA0NTEwOSIsImlhdCI6MTUwMDQ2NjQ1M30.r6BHvTt3RCkYsTe_U36lAED_t8xtJRKFFEgVAkN8jNE
     ports:
@@ -91,7 +109,6 @@ services:
       - usermongo
       - userredis
       - tokenredis
-      #- lb0
 
   userredis:
     image: redis
@@ -105,6 +122,7 @@ services:
       - "6378:6379"
     networks:
       - microservices_default
+      - loadbalancer_default
     environment:
       SERVICE_NAME: userredis
       SERVICE_TAGS: production
@@ -119,6 +137,9 @@ services:
     restart: always
     ports:
       - "6376:6379"
+    networks:
+      - microservices_default
+      - loadbalancer_default
     environment:
       SERVICE_NAME: tokenredis
       SERVICE_TAGS: production
@@ -133,6 +154,9 @@ services:
     restart: always
     ports:
       - "6377:6379"
+    networks:
+      - microservices_default
+      - loadbalancer_default
     environment:
       SERVICE_NAME: backofficetokenredis
       SERVICE_TAGS: production
@@ -148,6 +172,9 @@ services:
     restart: always
     ports:
       - "27016:27017"
+    networks:
+      - microservices_default
+      - loadbalancer_default
     environment:
       SERVICE_NAME: usermongodb
       SERVICE_TAGS: production
@@ -165,13 +192,15 @@ services:
       SERVICE_TAGS: production,iphash
       NODE_ENV: development
       CONSUL_ADDRESS: consul:8500
+      DNSDOMAIN: ${DNSDOMAIN}
       TRACE_SERVICE_NAME: socketservice
       TRACE_API_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NmY0ZDE1ZTg2OTYyMzg2NzA0NTEwOSIsImlhdCI6MTUwMDQ2NjQ1M30.r6BHvTt3RCkYsTe_U36lAED_t8xtJRKFFEgVAkN8jNE
-    networks:
-      - microservices_default
     ports:
       - "8038:8038"
       - "9904:9922"
+    networks:
+      - microservices_default
+      - loadbalancer_default
     restart: always
     depends_on:
       - userandaccountservice
@@ -187,17 +216,17 @@ services:
         constraints: [node.role == manager]
     networks:
       - microservices_default
+      - loadbalancer_default
     environment:
       SERVICE_NAME: messageservice
       SERVICE_TAGS: production
       NODE_ENV: development
+      DNSDOMAIN: ${DNSDOMAIN}
       TRACE_SERVICE_NAME: messageservice
       TRACE_API_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NmY0ZDE1ZTg2OTYyMzg2NzA0NTEwOSIsImlhdCI6MTUwMDQ2NjQ1M30.r6BHvTt3RCkYsTe_U36lAED_t8xtJRKFFEgVAkN8jNE
     links:
       - messageservicemongo
       - pushnotificationserviceredis
-    networks:
-      - microservices_default
     ports:
       - "8037:8037"
       - "9005:9922"
@@ -213,6 +242,9 @@ services:
       replicas: 3
       placement:
         constraints: [node.role == manager]
+    networks:
+      - microservices_default
+      - loadbalancer_default
     ports:
       - "6374:6379"
     restart: always
@@ -225,6 +257,9 @@ services:
       replicas: 3
       placement:
         constraints: [node.role == manager]
+    networks:
+      - microservices_default
+      - loadbalancer_default
     ports:
       - "27005:27017"
     restart: always
@@ -242,10 +277,12 @@ services:
       SERVICE_TAGS: production
       NODE_ENV: development
       CONSUL_ADDRESS: consul:8500
+      DNSDOMAIN: ${DNSDOMAIN}
       TRACE_SERVICE_NAME: historyservice
       TRACE_API_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NmY0ZDE1ZTg2OTYyMzg2NzA0NTEwOSIsImlhdCI6MTUwMDQ2NjQ1M30.r6BHvTt3RCkYsTe_U36lAED_t8xtJRKFFEgVAkN8jNE
     networks:
       - microservices_default
+      - loadbalancer_default
     ports:
       - "8051:8051"
       - "9900:9922"
@@ -261,11 +298,12 @@ services:
       replicas: 3
       placement:
         constraints: [node.role == manager]
-      labels:
-        - apiRoute=/historymongo
     restart: always
     ports:
        - "27006:27017"
+    networks:
+      - microservices_default
+      - loadbalancer_default
     environment:
       SERVICE_NAME: historymongodb
       SERVICE_TAGS: production
@@ -280,6 +318,7 @@ services:
         constraints: [node.role == manager]
     networks:
       - microservices_default
+      - loadbalancer_default
     command: --smallfiles
     environment:
       SERVICE_NAME: transactionservice
@@ -303,6 +342,9 @@ services:
          constraints: [node.role == manager]
     ports:
        - "27012:27017"
+    networks:
+      - microservices_default
+      - loadbalancer_default
     restart: always
 
   transactionredis:
@@ -314,4 +356,7 @@ services:
         constraints: [node.role == manager]
     ports:
       - "6340:6379"
+    networks:
+      - microservices_default
+      - loadbalancer_default
     restart: always

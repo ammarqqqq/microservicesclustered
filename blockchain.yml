@@ -3,7 +3,7 @@ version: '3.0'
 networks:
   blockchain:
     external: false
-  proxy:
+  loadbalancer_default:
     external: true
 
 services:
@@ -21,8 +21,8 @@ services:
         - com.df.servicePath=${SERVICE_PATH:-/transactionservice}
         - com.df.port=8080
     networks:
-      - proxy
-      - soci80bankStackBlockchain_default
+      - blockchain_default
+      - loadbalancer_default
     environment:
       SERVICE_NAME: transactionservice
       SERVICE_TAGS: production
@@ -60,7 +60,10 @@ services:
     restart: on-failure
     container_name: bootstrap
     hostname: bootstrap
-    domainname: soci80bank.com
+    domainname: monifair.com
+    networks:
+      - blockchain_default
+      - loadbalancer_default
     environment:
       SERVICE_NAME: ethereum
       SERVICE_TAGS: production
@@ -84,6 +87,9 @@ services:
     restart: on-failure
     hostname: ethereum
     domainname: monfair.com
+    networks:
+      - blockchain_default
+      - loadbalancer_default
     environment:
       SERVICE_NAME: ethereum
       SERVICE_TAGS: production
@@ -103,6 +109,7 @@ services:
       - "30303/udp"
       - "8545"
 
+
   netstats:
     image: fintechinnovation/ethereum-netstats
     build: ./eth-netstats
@@ -112,7 +119,8 @@ services:
       placement:
         constraints: [node.role == worker]
     networks:
-      - blockchain
+      - blockchain_default
+      - loadbalancer_default
     container_name: netstats
     environment:
       WS_SECRET: eth-net-stats-secret
