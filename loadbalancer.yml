@@ -1,0 +1,28 @@
+version: '3'
+
+networks:
+  loadbalancer_default:
+    external: false
+
+services:
+  lb:
+    image: ammar2017/loadbalancerswarm
+    build: ./lbSwarm
+    deploy:
+      mode: replicated
+      replicas: 3
+      placement:
+        constraints: [node.role == manager]
+    ports:
+      - "443:443"
+    environment:
+      CONSUL_URL: consul:8500
+      DNSDOMAIN: ${DNSDOMAIN}
+    networks:
+      #- proxy
+      - loadbalancer_default
+    restart: always
+    hostname: lb
+    domainname: monifair.com
+    extra_hosts:
+     - "${DNSDOMAIN}:${DNSDOMAINIP}"
