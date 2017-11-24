@@ -169,7 +169,7 @@ messageservice:
     - "9005:9922"
   restart: always
   depends_on:
-      - messageservicemongo
+    - messageservicemongo
     - pushnotificationserviceredis
 
 pushnotificationserviceredis:
