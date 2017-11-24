@@ -279,5 +279,5 @@ services:
       placement:
         constraints: [node.role == manager]
     ports:
-      -"6340:6379"
+      - "6340:6379"
     restart: always
