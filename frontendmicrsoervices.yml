@@ -1,6 +1,6 @@
 version: '3'
 networks:
-  Frontendsvc:
+  Frontendsvc_default:
     external: false
 
 services:
@@ -14,7 +14,7 @@ services:
         constraints: [node.role == manager]
     networks:
       #- proxy
-      - Frontendsvc
+      - Frontendsvc_default
     environment:
       SERVICE_NAME: web
       SERVICE_TAGS: production
@@ -38,7 +38,7 @@ services:
       SERVICE_TAGS: production
     networks:
       #- proxy
-      - Frontendsvc
+      - Frontendsvc_default
     ports:
       - "84:443"
     hostname: backofficeweb
