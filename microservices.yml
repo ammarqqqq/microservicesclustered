@@ -31,6 +31,40 @@ services:
       - "9901:9922"
     restart: always
 
+
+  backofficeservice:
+    image: fintechinnovation/backofficeservice
+    build: ./backofficeservice
+    environment:
+      SERVICE_NAME: backofficeservice
+      SERVICE_TAGS: production
+      NODE_ENV: development
+      CONSUL_ADDRESS: consul:8500
+      DNSDOMAIN: ${DNSDOMAIN}
+      TRACE_SERVICE_NAME: backofficeservice
+      TRACE_API_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NmY0ZDE1ZTg2OTYyMzg2NzA0NTEwOSIsImlhdCI6MTUwMDQ2NjQ1M30.r6BHvTt3RCkYsTe_U36lAED_t8xtJRKFFEgVAkN8jNE
+      RABBITMQ_URL: 'amqps://rabbitmq:rabbitmq@rabbit3:5671/'
+    ports:
+      - "8050:8080"
+      - "9923:9922"
+    links:
+      - backofficemongo
+      - backofficetokenredis
+    restart: always
+    extra_hosts:
+      - "${DNSDOMAIN}:${DNSDOMAINIP}"
+
+  backofficemongo:
+    image: mongo:latest
+    command: --smallfiles
+    restart: always
+    ports:
+      - "27017"
+    environment:
+      SERVICE_NAME: backofficemongo
+      SERVICE_TAGS: production
+
+
   userandaccountservice:
     image: fintechinnovation/userandaccountservice:latest
     build: ./userandaccountservice
