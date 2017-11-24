@@ -1,7 +1,7 @@
 version: '3'
 
 networks:
-  loadbalancer_default:
+  loadbalancer:
     external: false
 
 services:
@@ -19,7 +19,6 @@ services:
       CONSUL_URL: consul:8500
       DNSDOMAIN: ${DNSDOMAIN}
     networks:
-      #- proxy
       - loadbalancer_default
     restart: always
     hostname: lb

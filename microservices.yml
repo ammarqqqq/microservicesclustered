@@ -1,9 +1,9 @@
 version: '3'
 
 networks:
-  microservices_default:
+  microservices:
     external: false
-  loadbalancer_default:
+  loadbalancer:
     external: true
 
 services:
