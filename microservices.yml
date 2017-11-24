@@ -7,277 +7,277 @@ networks:
     external: true
 
 services:
-authenticationservice:
-  image: fintechinnovation/authenticationservice
-  build: ./authenticationservice
-  deploy:
-    mode: replicated
-    replicas: 3
-    placement:
-      constraints: [node.role == manager]
-  networks:
-    - microservices_default
-    #-loadbalancer
-  environment:
-    SERVICE_NAME: authenticationservice
-    SERVICE_TAGS: production
-    NODE_ENV: development
-    hostname: authenticationservice
-    DNSDOMAIN: ${DNSDOMAIN}
-    TRACE_SERVICE_NAME: authenticationservice
-    TRACE_API_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NmY0ZDE1ZTg2OTYyMzg2NzA0NTEwOSIsImlhdCI6MTUwMDQ2NjQ1M30.r6BHvTt3RCkYsTe_U36lAED_t8xtJRKFFEgVAkN8jNE
-  ports:
-    - "8040:8040"
-    - "9901:9922"
-  restart: always
-
-userandaccountservice:
-  image: fintechinnovation/userandaccountservice:latest
-  build: ./userandaccountservice
-  deploy:
-    mode: replicated
-    replicas: 3
-    placement:
-      constraints: [node.role == manager]
-  networks:
-    - microservices_default
-  environment:
-    SERVICE_NAME: userandaccountservice
-    SERVICE_TAGS: production
-    NODE_ENV: development
-    CONSUL_ADDRESS: consul:8500
-    TRACE_SERVICE_NAME: userandaccountservice
-    TRACE_API_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NmY0ZDE1ZTg2OTYyMzg2NzA0NTEwOSIsImlhdCI6MTUwMDQ2NjQ1M30.r6BHvTt3RCkYsTe_U36lAED_t8xtJRKFFEgVAkN8jNE
-  ports:
-    - "8039:8039"
-    - "9003:9092"
-  restart: always
-  depends_on:
-    - historyservice
-    - usermongo
-    - userredis
-    - tokenredis
-    #- lb0
-
-userredis:
-  image: redis
-  deploy:
-    mode: replicated
-    replicas: 3
-    placement:
-      constraints: [node.role == manager]
-  restart: always
-  ports:
-    - "6378:6379"
-  networks:
-    - microservices_default
-  environment:
-    SERVICE_NAME: userredis
-    SERVICE_TAGS: production
-
-tokenredis:
-  image: redis
-  deploy:
-    mode: replicated
-    replicas: 3
-    placement:
-      constraints: [node.role == manager]
-  restart: always
-  ports:
-    - "6376:6379"
-  environment:
-    SERVICE_NAME: tokenredis
-    SERVICE_TAGS: production
-
-backofficetokenredis:
-  image: redis
-  deploy:
-    mode: replicated
-    replicas: 3
-    placement:
-      constraints: [node.role == manager]
-  restart: always
-  ports:
-    - "6377:6379"
-  environment:
-    SERVICE_NAME: backofficetokenredis
-    SERVICE_TAGS: production
-
-usermongo:
-  image: mongo:latest
-  deploy:
-    mode: replicated
-    replicas: 3
-    placement:
-      constraints: [node.role == manager]
-  command: --smallfiles
-  restart: always
-  ports:
-    - "27016:27017"
-  environment:
-    SERVICE_NAME: usermongodb
-    SERVICE_TAGS: production
-
-socketservice:
-  image: fintechinnovation/socketservice
-  build: ./socketservice
-  deploy:
-    mode: replicated
-    replicas: 3
-    placement:
-      constraints: [node.role == manager]
-  environment:
-    SERVICE_NAME: socketservice
-    SERVICE_TAGS: production,iphash
-    NODE_ENV: development
-    CONSUL_ADDRESS: consul:8500
-    TRACE_SERVICE_NAME: socketservice
-    TRACE_API_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NmY0ZDE1ZTg2OTYyMzg2NzA0NTEwOSIsImlhdCI6MTUwMDQ2NjQ1M30.r6BHvTt3RCkYsTe_U36lAED_t8xtJRKFFEgVAkN8jNE
-  networks:
-    - microservices_default
-  ports:
-    - "8038:81"
-    - "9904:9922"
-  restart: always
-  depends_on:
-    - userandaccountservice
-    - transactionservice
-
-messageservice:
-  image: fintechinnovation/messageservice
-  build: ./messageservice
-  deploy:
-    mode: replicated
-    replicas: 3
-    placement:
-      constraints: [node.role == manager]
-  networks:
-    - microservices_default
-  environment:
-    SERVICE_NAME: messageservice
-    SERVICE_TAGS: production
-    NODE_ENV: development
-    TRACE_SERVICE_NAME: messageservice
-    TRACE_API_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NmY0ZDE1ZTg2OTYyMzg2NzA0NTEwOSIsImlhdCI6MTUwMDQ2NjQ1M30.r6BHvTt3RCkYsTe_U36lAED_t8xtJRKFFEgVAkN8jNE
-  links:
-    - messageservicemongo
-    - pushnotificationserviceredis
-  networks:
-    - microservices_default
-  ports:
-    - "8037:8037"
-    - "9005:9922"
-  restart: always
-  depends_on:
-    - messageservicemongo
-    - pushnotificationserviceredis
-
-pushnotificationserviceredis:
-  image: redis
-  deploy:
-    mode: replicated
-    replicas: 3
-    placement:
-      constraints: [node.role == manager]
-  ports:
-    - "6374:6379"
-  restart: always
-
-messageservicemongo:
-  image: mongo:latest
-  command: --smallfiles
-  deploy:
-    mode: replicated
-    replicas: 3
-    placement:
-      constraints: [node.role == manager]
-  ports:
-    - "27005:27017"
-  restart: always
-
-historyservice:
-  image: fintechinnovation/historyservice
-  build: ./historyservice
-  deploy:
-    mode: replicated
-    replicas: 3
-    placement:
-      constraints: [node.role == manager]
-  environment:
-    SERVICE_NAME: historyservice
-    SERVICE_TAGS: production
-    NODE_ENV: development
-    CONSUL_ADDRESS: consul:8500
-    TRACE_SERVICE_NAME: historyservice
-    TRACE_API_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NmY0ZDE1ZTg2OTYyMzg2NzA0NTEwOSIsImlhdCI6MTUwMDQ2NjQ1M30.r6BHvTt3RCkYsTe_U36lAED_t8xtJRKFFEgVAkN8jNE
-  networks:
-    - microservices_default
-  ports:
-    - "8051:8051"
-    - "9900:9922"
-  restart: always
-# depends_on:
-#     - lb
-
-historymongo:
-  image: mongo:latest
-  command: --smallfiles
-  deploy:
-    mode: replicated
-    replicas: 3
-    placement:
-      constraints: [node.role == manager]
-    labels:
-      - apiRoute=/historymongo
-  restart: always
-  ports:
-     - "27006:27017"
-  environment:
-    SERVICE_NAME: historymongodb
-    SERVICE_TAGS: production
-
-transactionservice:
-  image: ammar2017/transactionservice
-  build: ./transactionservice
-  deploy:
-    mode: replicated
-    replicas: 3
-    placement:
-      constraints: [node.role == manager]
-  networks:
-    - microservices_default
-  command: --smallfiles
-  environment:
-    SERVICE_NAME: transactionservice
-    SERVICE_TAGS: production
-    NODE_ENV: development
-    DNSDOMAIN: ${DNSDOMAIN}
-    CONSUL_ADDRESS: consul:8500
-    TRACE_SERVICE_NAME: transactionservice
-    TRACE_API_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NmY0ZDE1ZTg2OTYyMzg2NzA0NTEwOSIsImlhdCI6MTUwMDQ2NjQ1M30.r6BHvTt3RCkYsTe_U36lAED_t8xtJRKFFEgVAkN8jNE
-  ports:
-    - "8020:8020"
-    - "9922:9922"
-  restart: always
-
-transactionmongo:
-  image: mongo:latest
-  deploy:
-     mode: replicated
-     replicas: 1
-     placement:
-       constraints: [node.role == manager]
-  ports:
-     - "27012:27017"
-  restart: always
-
-transactionredis:
-  image: redis
-  deploy:
-     mode: replicated
-     replicas: 1
-     placement:
+  authenticationservice:
+    image: fintechinnovation/authenticationservice
+    build: ./authenticationservice
+    deploy:
+      mode: replicated
+      replicas: 3
+      placement:
         constraints: [node.role == manager]
-  ports:
+    networks:
+      - microservices_default
+      #-loadbalancer
+    environment:
+      SERVICE_NAME: authenticationservice
+      SERVICE_TAGS: production
+      NODE_ENV: development
+      hostname: authenticationservice
+      DNSDOMAIN: ${DNSDOMAIN}
+      TRACE_SERVICE_NAME: authenticationservice
+      TRACE_API_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NmY0ZDE1ZTg2OTYyMzg2NzA0NTEwOSIsImlhdCI6MTUwMDQ2NjQ1M30.r6BHvTt3RCkYsTe_U36lAED_t8xtJRKFFEgVAkN8jNE
+    ports:
+      - "8040:8040"
+      - "9901:9922"
+    restart: always
+
+  userandaccountservice:
+    image: fintechinnovation/userandaccountservice:latest
+    build: ./userandaccountservice
+    deploy:
+      mode: replicated
+      replicas: 3
+      placement:
+        constraints: [node.role == manager]
+    networks:
+      - microservices_default
+    environment:
+      SERVICE_NAME: userandaccountservice
+      SERVICE_TAGS: production
+      NODE_ENV: development
+      CONSUL_ADDRESS: consul:8500
+      TRACE_SERVICE_NAME: userandaccountservice
+      TRACE_API_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NmY0ZDE1ZTg2OTYyMzg2NzA0NTEwOSIsImlhdCI6MTUwMDQ2NjQ1M30.r6BHvTt3RCkYsTe_U36lAED_t8xtJRKFFEgVAkN8jNE
+    ports:
+      - "8039:8039"
+      - "9003:9092"
+    restart: always
+    depends_on:
+      - historyservice
+      - usermongo
+      - userredis
+      - tokenredis
+      #- lb0
+
+  userredis:
+    image: redis
+    deploy:
+      mode: replicated
+      replicas: 3
+      placement:
+        constraints: [node.role == manager]
+    restart: always
+    ports:
+      - "6378:6379"
+    networks:
+      - microservices_default
+    environment:
+      SERVICE_NAME: userredis
+      SERVICE_TAGS: production
+
+  tokenredis:
+    image: redis
+    deploy:
+      mode: replicated
+      replicas: 3
+      placement:
+        constraints: [node.role == manager]
+    restart: always
+    ports:
+      - "6376:6379"
+    environment:
+      SERVICE_NAME: tokenredis
+      SERVICE_TAGS: production
+
+  backofficetokenredis:
+    image: redis
+    deploy:
+      mode: replicated
+      replicas: 3
+      placement:
+        constraints: [node.role == manager]
+    restart: always
+    ports:
+      - "6377:6379"
+    environment:
+      SERVICE_NAME: backofficetokenredis
+      SERVICE_TAGS: production
+
+  usermongo:
+    image: mongo:latest
+    deploy:
+      mode: replicated
+      replicas: 3
+      placement:
+        constraints: [node.role == manager]
+    command: --smallfiles
+    restart: always
+    ports:
+      - "27016:27017"
+    environment:
+      SERVICE_NAME: usermongodb
+      SERVICE_TAGS: production
+
+  socketservice:
+    image: fintechinnovation/socketservice
+    build: ./socketservice
+    deploy:
+      mode: replicated
+      replicas: 3
+      placement:
+        constraints: [node.role == manager]
+    environment:
+      SERVICE_NAME: socketservice
+      SERVICE_TAGS: production,iphash
+      NODE_ENV: development
+      CONSUL_ADDRESS: consul:8500
+      TRACE_SERVICE_NAME: socketservice
+      TRACE_API_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NmY0ZDE1ZTg2OTYyMzg2NzA0NTEwOSIsImlhdCI6MTUwMDQ2NjQ1M30.r6BHvTt3RCkYsTe_U36lAED_t8xtJRKFFEgVAkN8jNE
+    networks:
+      - microservices_default
+    ports:
+      - "8038:8038"
+      - "9904:9922"
+    restart: always
+    depends_on:
+      - userandaccountservice
+      - transactionservice
+
+  messageservice:
+    image: fintechinnovation/messageservice
+    build: ./messageservice
+    deploy:
+      mode: replicated
+      replicas: 3
+      placement:
+        constraints: [node.role == manager]
+    networks:
+      - microservices_default
+    environment:
+      SERVICE_NAME: messageservice
+      SERVICE_TAGS: production
+      NODE_ENV: development
+      TRACE_SERVICE_NAME: messageservice
+      TRACE_API_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NmY0ZDE1ZTg2OTYyMzg2NzA0NTEwOSIsImlhdCI6MTUwMDQ2NjQ1M30.r6BHvTt3RCkYsTe_U36lAED_t8xtJRKFFEgVAkN8jNE
+    links:
+      - messageservicemongo
+      - pushnotificationserviceredis
+    networks:
+      - microservices_default
+    ports:
+      - "8037:8037"
+      - "9005:9922"
+    restart: always
+    depends_on:
+      - messageservicemongo
+      - pushnotificationserviceredis
+
+  pushnotificationserviceredis:
+    image: redis
+    deploy:
+      mode: replicated
+      replicas: 3
+      placement:
+        constraints: [node.role == manager]
+    ports:
+      - "6374:6379"
+    restart: always
+
+  messageservicemongo:
+    image: mongo:latest
+    command: --smallfiles
+    deploy:
+      mode: replicated
+      replicas: 3
+      placement:
+        constraints: [node.role == manager]
+    ports:
+      - "27005:27017"
+    restart: always
+
+  historyservice:
+    image: fintechinnovation/historyservice
+    build: ./historyservice
+    deploy:
+      mode: replicated
+      replicas: 3
+      placement:
+        constraints: [node.role == manager]
+    environment:
+      SERVICE_NAME: historyservice
+      SERVICE_TAGS: production
+      NODE_ENV: development
+      CONSUL_ADDRESS: consul:8500
+      TRACE_SERVICE_NAME: historyservice
+      TRACE_API_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NmY0ZDE1ZTg2OTYyMzg2NzA0NTEwOSIsImlhdCI6MTUwMDQ2NjQ1M30.r6BHvTt3RCkYsTe_U36lAED_t8xtJRKFFEgVAkN8jNE
+    networks:
+      - microservices_default
+    ports:
+      - "8051:8051"
+      - "9900:9922"
+    restart: always
+    # depends_on:
+    #     - lb
+
+  historymongo:
+    image: mongo:latest
+    command: --smallfiles
+    deploy:
+      mode: replicated
+      replicas: 3
+      placement:
+        constraints: [node.role == manager]
+      labels:
+        - apiRoute=/historymongo
+    restart: always
+    ports:
+       - "27006:27017"
+    environment:
+      SERVICE_NAME: historymongodb
+      SERVICE_TAGS: production
+
+  transactionservice:
+    image: ammar2017/transactionservice
+    build: ./transactionservice
+    deploy:
+      mode: replicated
+      replicas: 3
+      placement:
+        constraints: [node.role == manager]
+    networks:
+      - microservices_default
+    command: --smallfiles
+    environment:
+      SERVICE_NAME: transactionservice
+      SERVICE_TAGS: production
+      NODE_ENV: development
+      DNSDOMAIN: ${DNSDOMAIN}
+      CONSUL_ADDRESS: consul:8500
+      TRACE_SERVICE_NAME: transactionservice
+      TRACE_API_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NmY0ZDE1ZTg2OTYyMzg2NzA0NTEwOSIsImlhdCI6MTUwMDQ2NjQ1M30.r6BHvTt3RCkYsTe_U36lAED_t8xtJRKFFEgVAkN8jNE
+    ports:
+      - "8020:8020"
+      - "9922:9922"
+    restart: always
+
+  transactionmongo:
+    image: mongo:latest
+    deploy:
+       mode: replicated
+       replicas: 1
+       placement:
+         constraints: [node.role == manager]
+    ports:
+       - "27012:27017"
+    restart: always
+
+  transactionredis:
+    image: redis
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+    ports:
       -"6340:6379"
-  restart: always
+    restart: always
