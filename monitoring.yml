@@ -1,15 +1,15 @@
 version: '3'
 
 networks:
-  portainer:
+  monitoring_default:
     external: false
   loadbalancer:
     external: true
 
 services:
 
-  portainer:
-    image: portainer/portainer
+  monitoring_default:
+    image: monitoring_default/monitoring_default
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
@@ -22,7 +22,7 @@ services:
     command: -H unix:///var/run/docker.sock
     networks:
       #- proxy
-      - portainer
+      - monitoring_default
 
   viz:
     image: dockersamples/visualizer
@@ -35,7 +35,7 @@ services:
         constraints: [node.role == manager]
     networks:
       #- proxy
-      - portainer
+      - monitoring_default
     ports:
       - 9090:8080
     restart: always

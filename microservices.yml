@@ -1,7 +1,7 @@
 version: '3'
 
 networks:
-  microservices:
+  microservices_default:
     external: false
   loadbalancer:
     external: true
@@ -16,7 +16,7 @@ authenticationservice:
     placement:
       constraints: [node.role == manager]
   networks:
-    - microservices
+    - microservices_default
     #-loadbalancer
   environment:
     SERVICE_NAME: authenticationservice
@@ -40,7 +40,7 @@ userandaccountservice:
     placement:
       constraints: [node.role == manager]
   networks:
-    - microservices
+    - microservices_default
   environment:
     SERVICE_NAME: userandaccountservice
     SERVICE_TAGS: production
@@ -70,7 +70,7 @@ userredis:
   ports:
     - "6378:6379"
   networks:
-    - microservices
+    - microservices_default
   environment:
     SERVICE_NAME: userredis
     SERVICE_TAGS: production
@@ -134,7 +134,7 @@ socketservice:
     TRACE_SERVICE_NAME: socketservice
     TRACE_API_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NmY0ZDE1ZTg2OTYyMzg2NzA0NTEwOSIsImlhdCI6MTUwMDQ2NjQ1M30.r6BHvTt3RCkYsTe_U36lAED_t8xtJRKFFEgVAkN8jNE
   networks:
-    - microservices
+    - microservices_default
   ports:
     - "8038:81"
     - "9904:9922"
@@ -152,7 +152,7 @@ messageservice:
     placement:
       constraints: [node.role == manager]
   networks:
-    - microservices
+    - microservices_default
   environment:
     SERVICE_NAME: messageservice
     SERVICE_TAGS: production
@@ -163,7 +163,7 @@ messageservice:
     - messageservicemongo
     - pushnotificationserviceredis
   networks:
-    - microservices
+    - microservices_default
   ports:
     - "8037:8037"
     - "9005:9922"
@@ -211,7 +211,7 @@ historyservice:
     TRACE_SERVICE_NAME: historyservice
     TRACE_API_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NmY0ZDE1ZTg2OTYyMzg2NzA0NTEwOSIsImlhdCI6MTUwMDQ2NjQ1M30.r6BHvTt3RCkYsTe_U36lAED_t8xtJRKFFEgVAkN8jNE
   networks:
-    - microservices
+    - microservices_default
   ports:
     - "8051:8051"
     - "9900:9922"
@@ -245,7 +245,7 @@ transactionservice:
     placement:
       constraints: [node.role == manager]
   networks:
-    - microservices
+    - microservices_default
   command: --smallfiles
   environment:
     SERVICE_NAME: transactionservice

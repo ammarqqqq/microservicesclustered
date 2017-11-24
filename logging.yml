@@ -1,7 +1,7 @@
 version: '3'
 
 networks:
-  portainer:
+  logging_default:
     external: false
 
 services:
@@ -22,5 +22,5 @@ elk:
     - "5044:5044"
   networks:
     #- proxy
-    - portainer
+    - logging_default
   restart: always
