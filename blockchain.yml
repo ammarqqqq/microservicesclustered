@@ -1,9 +1,9 @@
 version: '3.0'
 
 networks:
-  blockchain:
+  blockchain_default:
     external: false
-  loadbalancer:
+  loadbalancer_default:
     external: true
 
 services:

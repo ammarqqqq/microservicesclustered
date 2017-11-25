@@ -1,8 +1,8 @@
 version: '3'
 networks:
-  frontendsvc:
+  frontendsvc_default:
     external: false
-  loadbalancer:
+  loadbalancer_default:
     external: true
 
 services:

@@ -1,9 +1,9 @@
 version: '3'
 
 networks:
-  logging:
+  logging_default:
     external: false
-  loadbalancer:
+  loadbalancer_default:
     external: true
 
 services:
