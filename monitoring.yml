@@ -1,15 +1,15 @@
 version: '3'
 
 networks:
-  microservices_default:
+  monitoring_monitoring_default:
     external: false
-  loadbalancer_default:
+  loadbalancer_loadbalancer_default:
     external: true
 
 services:
 
-  monitoring_default:
-    image: monitoring_default/monitoring_default
+  portainer:
+    image: portainer/portainer
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
@@ -21,8 +21,8 @@ services:
         constraints: [node.role == manager]
     command: -H unix:///var/run/docker.sock
     networks:
-      - loadbalancer_default
-      - monitoring_default
+      - loadbalancer_loadbalancer_default
+      - monitoring_monitoring_default
 
   viz:
     image: dockersamples/visualizer
@@ -34,8 +34,8 @@ services:
       placement:
         constraints: [node.role == manager]
     networks:
-      - loadbalancer_default
-      - monitoring_default
+      - loadbalancer_loadbalancer_default
+      - monitoring_monitoring_default
     ports:
       - 9090:8080
     restart: always

@@ -1,9 +1,9 @@
 version: '3'
 
 networks:
-  logging_default:
+  logging_logging_default:
     external: false
-  loadbalancer_default:
+  loadbalancer_loadbalancer_default:
     external: true
 
 services:
@@ -23,6 +23,6 @@ elk:
     - "5000:5000"
     - "5044:5044"
   networks:
-    - loadbalancer_default
-    - logging_default
+    - loadbalancer_loadbalancer_default
+    - logging_logging_default
   restart: always

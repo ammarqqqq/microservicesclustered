@@ -1,7 +1,7 @@
 version: '3'
 
 networks:
-  loadbalancer_default:
+  loadbalancer_loadbalancer_default:
     external: false
 
 services:
@@ -19,7 +19,7 @@ services:
       CONSUL_URL: consul:8500
       DNSDOMAIN: ${DNSDOMAIN}
     networks:
-      - loadbalancer_default
+      - loadbalancer_loadbalancer_default
     restart: always
     hostname: lb
     domainname: monifair.com
