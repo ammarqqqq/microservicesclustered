@@ -18,12 +18,14 @@ services:
       - frontend
       - loadbalancer_default
     environment:
-      SERVICE_NAME: web
+      SERVICE_NAME: Frontendsvc_web
       SERVICE_TAGS: production
     ports:
       - "81:443"
     hostname: web
     domainname: monifair.com
+    extra_hosts:
+      - "${DNSDOMAIN}:${DNSDOMAINIP}"
     restart: always
 
   backofficeweb:
@@ -36,7 +38,7 @@ services:
         constraints: [node.role == manager]
     restart: always
     environment:
-      SERVICE_NAME: backofficeweb
+      SERVICE_NAME: Frontendsvc_backofficeweb
       SERVICE_TAGS: production
     networks:
       - frontend
@@ -45,3 +47,5 @@ services:
       - "84:443"
     hostname: backofficeweb
     domainname: monifair.com
+    extra_hosts:
+      - "${DNSDOMAIN}:${DNSDOMAINIP}"

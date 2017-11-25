@@ -30,6 +30,8 @@ services:
       - "8040:8040"
       - "9901:9922"
     restart: always
+    extra_hosts:
+      - "${DNSDOMAIN}:${DNSDOMAINIP}"
 
 
   backofficeservice:
@@ -109,6 +111,8 @@ services:
       - usermongo
       - userredis
       - tokenredis
+    extra_hosts:
+      - "${DNSDOMAIN}:${DNSDOMAINIP}"
 
   userredis:
     image: redis
@@ -204,6 +208,8 @@ services:
     depends_on:
       - userandaccountservice
       - transactionservice
+    extra_hosts:
+      - "${DNSDOMAIN}:${DNSDOMAINIP}"
 
   messageservice:
     image: fintechinnovation/messageservice
@@ -233,6 +239,8 @@ services:
     depends_on:
       - messageservicemongo
       - pushnotificationserviceredis
+    extra_hosts:
+      - "${DNSDOMAIN}:${DNSDOMAINIP}"
 
   pushnotificationserviceredis:
     image: redis
@@ -286,8 +294,8 @@ services:
       - "8051:8051"
       - "9900:9922"
     restart: always
-    # depends_on:
-    #     - lb
+    extra_hosts:
+      - "${DNSDOMAIN}:${DNSDOMAINIP}"
 
   historymongo:
     image: mongo:latest
@@ -331,6 +339,8 @@ services:
       - "8020:8020"
       - "9922:9922"
     restart: always
+    extra_hosts:
+      - "${DNSDOMAIN}:${DNSDOMAINIP}"
 
   transactionmongo:
     image: mongo:latest
