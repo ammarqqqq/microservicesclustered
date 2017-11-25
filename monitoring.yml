@@ -1,9 +1,9 @@
 version: '3'
 
 networks:
-  monitoring_monitoring_default:
+  monitoring_default:
     external: false
-  loadbalancer_loadbalancer_default:
+  loadbalancer_default:
     external: true
 
 services:
@@ -21,8 +21,8 @@ services:
         constraints: [node.role == manager]
     command: -H unix:///var/run/docker.sock
     networks:
-      - loadbalancer_loadbalancer_default
-      - monitoring_monitoring_default
+      - loadbalancer_default
+      - monitoring_default
 
   viz:
     image: dockersamples/visualizer
@@ -34,8 +34,8 @@ services:
       placement:
         constraints: [node.role == manager]
     networks:
-      - loadbalancer_loadbalancer_default
-      - monitoring_monitoring_default
+      - loadbalancer_default
+      - monitoring_default
     ports:
       - 9090:8080
     restart: always

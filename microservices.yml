@@ -1,9 +1,9 @@
 version: '3'
 
 networks:
-  microservices_microservices_default:
+  microservices_default:
     external: false
-  loadbalancer_loadbalancer_default:
+  loadbalancer_default:
     external: true
 
 services:
@@ -16,8 +16,8 @@ services:
       placement:
         constraints: [node.role == manager]
     networks:
-      - microservices_microservices_default
-      - loadbalancer_loadbalancer_default
+      - microservices_default
+      - loadbalancer_default
     environment:
       SERVICE_NAME: authenticationservice
       SERVICE_TAGS: production
@@ -41,8 +41,8 @@ services:
       placement:
         constraints: [node.role == manager]
     networks:
-      - microservices_microservices_default
-      - loadbalancer_loadbalancer_default
+      - microservices_default
+      - loadbalancer_default
     environment:
       SERVICE_NAME: backofficeservice
       SERVICE_TAGS: production
@@ -74,8 +74,8 @@ services:
       placement:
         constraints: [node.role == manager]
     networks:
-      - microservices_microservices_default
-      - loadbalancer_loadbalancer_default
+      - microservices_default
+      - loadbalancer_default
     environment:
       SERVICE_NAME: backofficemongo
       SERVICE_TAGS: production
@@ -90,8 +90,8 @@ services:
       placement:
         constraints: [node.role == manager]
     networks:
-      - microservices_microservices_default
-      - loadbalancer_loadbalancer_default
+      - microservices_default
+      - loadbalancer_default
     environment:
       SERVICE_NAME: userandaccountservice
       SERVICE_TAGS: production
@@ -121,8 +121,8 @@ services:
     ports:
       - "6378:6379"
     networks:
-      - microservices_microservices_default
-      - loadbalancer_loadbalancer_default
+      - microservices_default
+      - loadbalancer_default
     environment:
       SERVICE_NAME: userredis
       SERVICE_TAGS: production
@@ -138,8 +138,8 @@ services:
     ports:
       - "6376:6379"
     networks:
-      - microservices_microservices_default
-      - loadbalancer_loadbalancer_default
+      - microservices_default
+      - loadbalancer_default
     environment:
       SERVICE_NAME: tokenredis
       SERVICE_TAGS: production
@@ -155,8 +155,8 @@ services:
     ports:
       - "6377:6379"
     networks:
-      - microservices_microservices_default
-      - loadbalancer_loadbalancer_default
+      - microservices_default
+      - loadbalancer_default
     environment:
       SERVICE_NAME: backofficetokenredis
       SERVICE_TAGS: production
@@ -173,8 +173,8 @@ services:
     ports:
       - "27016:27017"
     networks:
-      - microservices_microservices_default
-      - loadbalancer_loadbalancer_default
+      - microservices_default
+      - loadbalancer_default
     environment:
       SERVICE_NAME: usermongodb
       SERVICE_TAGS: production
@@ -199,8 +199,8 @@ services:
       - "8038:8038"
       - "9904:9922"
     networks:
-      - microservices_microservices_default
-      - loadbalancer_loadbalancer_default
+      - microservices_default
+      - loadbalancer_default
     restart: always
     depends_on:
       - userandaccountservice
@@ -215,8 +215,8 @@ services:
       placement:
         constraints: [node.role == manager]
     networks:
-      - microservices_microservices_default
-      - loadbalancer_loadbalancer_default
+      - microservices_default
+      - loadbalancer_default
     environment:
       SERVICE_NAME: messageservice
       SERVICE_TAGS: production
@@ -243,8 +243,8 @@ services:
       placement:
         constraints: [node.role == manager]
     networks:
-      - microservices_microservices_default
-      - loadbalancer_loadbalancer_default
+      - microservices_default
+      - loadbalancer_default
     ports:
       - "6374:6379"
     restart: always
@@ -258,8 +258,8 @@ services:
       placement:
         constraints: [node.role == manager]
     networks:
-      - microservices_microservices_default
-      - loadbalancer_loadbalancer_default
+      - microservices_default
+      - loadbalancer_default
     ports:
       - "27005:27017"
     restart: always
@@ -281,8 +281,8 @@ services:
       TRACE_SERVICE_NAME: historyservice
       TRACE_API_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NmY0ZDE1ZTg2OTYyMzg2NzA0NTEwOSIsImlhdCI6MTUwMDQ2NjQ1M30.r6BHvTt3RCkYsTe_U36lAED_t8xtJRKFFEgVAkN8jNE
     networks:
-      - microservices_microservices_default
-      - loadbalancer_loadbalancer_default
+      - microservices_default
+      - loadbalancer_default
     ports:
       - "8051:8051"
       - "9900:9922"
@@ -302,8 +302,8 @@ services:
     ports:
        - "27006:27017"
     networks:
-      - microservices_microservices_default
-      - loadbalancer_loadbalancer_default
+      - microservices_default
+      - loadbalancer_default
     environment:
       SERVICE_NAME: historymongodb
       SERVICE_TAGS: production
@@ -317,8 +317,8 @@ services:
       placement:
         constraints: [node.role == manager]
     networks:
-      - microservices_microservices_default
-      - loadbalancer_loadbalancer_default
+      - microservices_default
+      - loadbalancer_default
     command: --smallfiles
     environment:
       SERVICE_NAME: transactionservice
@@ -343,8 +343,8 @@ services:
     ports:
        - "27012:27017"
     networks:
-      - microservices_microservices_default
-      - loadbalancer_loadbalancer_default
+      - microservices_default
+      - loadbalancer_default
     restart: always
 
   transactionredis:
@@ -357,6 +357,6 @@ services:
     ports:
       - "6340:6379"
     networks:
-      - microservices_microservices_default
-      - loadbalancer_loadbalancer_default
+      - microservices_default
+      - loadbalancer_default
     restart: always
