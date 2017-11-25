@@ -1,6 +1,8 @@
 version: '3.0'
 
 networks:
+  blockchain:
+    external: false
   loadbalancer_default:
     external: true
 
@@ -14,6 +16,7 @@ services:
       placement:
         constraints: [node.role== manager]
     networks:
+      - blockchain
       - loadbalancer_default
     environment:
       SERVICE_NAME: transactionservice
@@ -54,6 +57,7 @@ services:
     hostname: bootstrap
     domainname: monifair.com
     networks:
+      - blockchain
       - loadbalancer_default
     environment:
       SERVICE_NAME: ethereum
@@ -79,6 +83,7 @@ services:
     hostname: ethereum
     domainname: monfair.com
     networks:
+      - blockchain
       - loadbalancer_default
     environment:
       SERVICE_NAME: ethereum
@@ -109,6 +114,7 @@ services:
       placement:
         constraints: [node.role == worker]
     networks:
+      - blockchain
       - loadbalancer_default
     container_name: netstats
     environment:

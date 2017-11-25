@@ -1,5 +1,7 @@
 version: '3'
 networks:
+  frontend:
+    external: false
   loadbalancer_default:
     external: true
 
@@ -13,6 +15,7 @@ services:
       placement:
         constraints: [node.role == manager]
     networks:
+      - frontend
       - loadbalancer_default
     environment:
       SERVICE_NAME: web
@@ -36,6 +39,7 @@ services:
       SERVICE_NAME: backofficeweb
       SERVICE_TAGS: production
     networks:
+      - frontend
       - loadbalancer_default
     ports:
       - "84:443"
