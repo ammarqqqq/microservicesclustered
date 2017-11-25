@@ -10,7 +10,7 @@ services:
 
   bootstrap:
     image: ammar2017/ethereum-gethclient
-    build:  ./eth-geth-client
+    build: ./eth-geth-client
     deploy:
       placement:
         constraints: [node.hostname == bankinstance7-worker-blockchain]
@@ -37,7 +37,7 @@ services:
 
   ethereum:
     image: ammar2017/ethereum-gethclient
-    build:  ./eth-geth-client
+    build: ./eth-geth-client
     deploy:
       placement:
         constraints: [node.hostname == bankinstance7-worker-blockchain]
