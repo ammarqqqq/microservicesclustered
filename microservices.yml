@@ -326,7 +326,6 @@ services:
     networks:
       - microservices
       - loadbalancer_default
-    command: --smallfiles
     environment:
       SERVICE_NAME: transactionservice
       SERVICE_TAGS: production
