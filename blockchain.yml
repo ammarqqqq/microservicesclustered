@@ -7,51 +7,13 @@ networks:
     external: true
 
 services:
-  transactionservice:
-    image: ammar2017/transactionservice
-    build: ./transactionservice
-    deploy:
-      mode: replicated
-      replicas: 3
-      placement:
-        constraints: [node.role== manager]
-    networks:
-      - blockchain
-      - loadbalancer_default
-    environment:
-      SERVICE_NAME: transactionservice
-      SERVICE_TAGS: production
-      NODE_ENV: development
-      CONSUL_ADDRESS: consul:8500
-      DNSDOMAIN: ${DNSDOMAIN}
-      TRACE_SERVICE_NAME: transactionservice
-      TRACE_API_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NmY0ZDE1ZTg2OTYyMzg2NzA0NTEwOSIsImlhdCI6MTUwMDQ2NjQ1M30.r6BHvTt3RCkYsTe_U36lAED_t8xtJRKFFEgVAkN8jNE
-    ports:
-      - "8080"
-      - "9922"
-    restart: always
-
-  transactionmongo:
-    image: mongo:latest
-    deploy:
-      placement:
-        constraints: [node.role== manager]
-    command: --smallfiles
-    restart: always
-
-  transactionredis:
-    image: redis
-    deploy:
-      placement:
-        constraints: [node.role== manager]
-    restart: always
 
   bootstrap:
-    image: fintechinnovation/ethereum
-    build:  ./geth-client
+    image: ammar2017/ethereum-gethclient
+    build:  ./eth-geth-client
     deploy:
       placement:
-        constraints: [node.role==manager]
+        constraints: [node.hostname == bankinstance7-worker-blockchain]
     restart: on-failure
     container_name: bootstrap
     hostname: bootstrap
@@ -74,14 +36,14 @@ services:
       - "/etc/localtime:/etc/localtime"
 
   ethereum:
-    image: fintechinnovation/ethereum
-    build:  ./geth-client
+    image: ammar2017/ethereum-gethclient
+    build:  ./eth-geth-client
     deploy:
       placement:
-        constraints: [node.role==worker]
+        constraints: [node.hostname == bankinstance7-worker-blockchain]
     restart: on-failure
     hostname: ethereum
-    domainname: monfair.com
+    domainname: monifair.com
     networks:
       - blockchain
       - loadbalancer_default
@@ -100,19 +62,19 @@ services:
       - "./eth-geth-client/BlockchainEthereumFiles2/keystore:/root/.ethereum/devchain/keystore:rw"
       - "/etc/localtime:/etc/localtime"
     ports:
-      - "30303"
-      - "30303/udp"
-      - "8545"
+      - "30303:30303"
+      - "30303:30303/udp"
+      - "8545:8545"
 
 
   netstats:
-    image: fintechinnovation/ethereum-netstats
+    image: ammar2017/ethereum-netstats
     build: ./eth-netstats
     restart: on-failure
     container_name: netstats
     deploy:
       placement:
-        constraints: [node.role == worker]
+        constraints: [node.hostname == bankinstance7-worker-blockchain]
     networks:
       - blockchain
       - loadbalancer_default
@@ -125,5 +87,5 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:rw
     ports:
-      - "3000"
+      - "3000:3000"
     restart: on-failure
