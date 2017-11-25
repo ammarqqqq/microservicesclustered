@@ -350,11 +350,13 @@ services:
        placement:
          constraints: [node.role == manager]
     ports:
-       - "27012:27017"
+      - "27012:27017"
     networks:
-       - microservices
-       - loadbalancer_default
+      - microservices
+      - loadbalancer_default
     restart: always
+    extra_hosts:
+      - "${DNSDOMAIN}:${DNSDOMAINIP}"
 
   transactionredis:
     image: redis
@@ -369,3 +371,5 @@ services:
       - microservices
       - loadbalancer_default
     restart: always
+    extra_hosts:
+      - "${DNSDOMAIN}:${DNSDOMAINIP}"
