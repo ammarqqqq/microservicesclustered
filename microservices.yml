@@ -322,7 +322,7 @@ services:
       mode: replicated
       replicas: 3
       placement:
-        constraints: [node.hostname  ==  bankinstance7-worker]
+        constraints: [node.role  ==  manager]
     networks:
       - microservices
       - loadbalancer_default
@@ -332,7 +332,7 @@ services:
       NODE_ENV: development
       DNSDOMAIN: ${DNSDOMAIN}
       CONSUL_ADDRESS: consul:8500
-      TRACE_SERVICE_NAME: transactionservice
+      TRACE_SERVICE_sNAME: transactionservice
       TRACE_API_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NmY0ZDE1ZTg2OTYyMzg2NzA0NTEwOSIsImlhdCI6MTUwMDQ2NjQ1M30.r6BHvTt3RCkYsTe_U36lAED_t8xtJRKFFEgVAkN8jNE
     ports:
       - "8020:8020"
@@ -345,9 +345,9 @@ services:
     image: mongo:latest
     deploy:
        mode: replicated
-       replicas: 1
+       replicas: 3
        placement:
-           constraints: [node.hostname  ==  bankinstance7-worker]
+           constraints: [node.role  ==  manager]
     ports:
       - "27012:27017"
     networks:
@@ -361,9 +361,9 @@ services:
     image: redis
     deploy:
       mode: replicated
-      replicas: 1
+      replicas: 3
       placement:
-        constraints: [node.hostname  ==  bankinstance7-worker]
+        constraints: [node.role  ==  manager]
     ports:
       - "6340:6379"
     networks:
