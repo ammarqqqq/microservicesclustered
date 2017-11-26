@@ -67,7 +67,7 @@ services:
     volumes:
        - "/eth-geth-client/BlockchainEthereumFiles2/password:/root/BlockchainEthereumFiles2/password:ro"
        - "/eth-geth-client/BlockchainEthereumFiles2/genesis.json:/root/BlockchainEthereumFiles2/genesis.json:ro"
-       - "eth-geth-client/BlockchainEthereumFiles2/keystore:/root/.ethereum/devchain/keystore:rw"
+       - "/eth-geth-client/BlockchainEthereumFiles2/keystore:/root/.ethereum/devchain/keystore:rw"
        #- "/etc/localtime:/etc/localtime"
     ports:
       - "30303:30303"
