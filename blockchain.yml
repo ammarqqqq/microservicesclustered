@@ -15,7 +15,7 @@ services:
       mode: replicated
       replicas: 1
       placement:
-        constraints: [node.hostname == bankinstance7-worker-blockchain]
+        constraints: [node.role == worker]
     restart: on-failure
     container_name: bootstrap
     hostname: bootstrap
@@ -47,7 +47,7 @@ services:
       mode: replicated
       replicas: 1
       placement:
-        constraints: [node.hostname == bankinstance7-worker-blockchain]
+        constraints: [node.role == worker]
     restart: on-failure
     hostname: ethereum
     domainname: monifair.com
@@ -86,7 +86,7 @@ services:
       mode: replicated
       replicas: 1
       placement:
-        constraints: [node.hostname == bankinstance7-worker-blockchain]
+        constraints: [node.role == worker]
     networks:
       - blockchain
       - loadbalancer_default
