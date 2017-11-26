@@ -37,7 +37,7 @@ services:
     volumes:
        #- "/BlockchainEthereumFiles2/password:/root/BlockchainEthereumFiles2/password:ro"
        #- "/BlockchainEthereumFiles2/genesis.json:/root/BlockchainEthereumFiles2/genesis.json:ro"
-       - "/root/BlockchainEthereumFiles2/keystore:/root/.ethereum/devchain/keystore:rw"
+       - /root/BlockchainEthereumFiles2/keystore:/root/.ethereum/devchain/keystore:rw
        - "/etc/localtime:/etc/localtime"
 
   ethereum:
@@ -67,8 +67,8 @@ services:
     volumes:
        #- "/BlockchainEthereumFiles2/password:/root/BlockchainEthereumFiles2/password:ro"
        #- "/BlockchainEthereumFiles2/genesis.json:/root/BlockchainEthereumFiles2/genesis.json:ro"
-       - "/root/BlockchainEthereumFiles2/keystore:/root/.ethereum/devchain/keystore:rw"
-       - "/etc/localtime:/etc/localtime"
+       - /root/BlockchainEthereumFiles2/keystore:/root/.ethereum/devchain/keystore:rw
+       - /etc/localtime:/etc/localtime
     ports:
       - "30303:30303"
       - "30303:30303/udp"
