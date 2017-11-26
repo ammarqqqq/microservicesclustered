@@ -13,7 +13,7 @@ services:
     build: ./eth-geth-client
     deploy:
       mode: replicated
-      replicas: 1
+      replicas: 3
       placement:
         constraints: [node.role  ==  manager]
     restart: on-failure
@@ -45,7 +45,7 @@ services:
     build: ./eth-geth-client
     deploy:
       mode: replicated
-      replicas: 1
+      replicas: 3
       placement:
         constraints: [node.role  ==  manager]
     restart: on-failure
@@ -84,7 +84,7 @@ services:
     container_name: netstats
     deploy:
       mode: replicated
-      replicas: 1
+      replicas: 3
       placement:
         constraints: [node.role  ==  manager]
     networks:
