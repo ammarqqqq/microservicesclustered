@@ -72,10 +72,10 @@ services:
        - "/eth-geth-client/BlockchainEthereumFiles2/genesis.json:/root/BlockchainEthereumFiles2/genesis.json:ro"
        - "/eth-geth-client/BlockchainEthereumFiles2/keystore:/root/.ethereum/devchain/keystore:rw"
        - "/etc/localtime:/etc/localtime"
-    ports:
-      - "30303:30303"
-      - "30303:30303/udp"
-      - "8545:8545"
+    #ports:
+    #  - "30303:30303"
+    #  - "30303:30303/udp"
+    #  - "8545:8545"
     extra_hosts:
       - "${DNSDOMAIN}:${DNSDOMAINIP}"
 
@@ -103,8 +103,8 @@ services:
       DNSDOMAIN: ${DNSDOMAIN}
     volumes:
       - /etc/localtime:/etc/localtime:rw
-    ports:
-      - "3000:3000"
+    #ports:
+    #  - "3000:3000"
     restart: on-failure
     extra_hosts:
       - "${DNSDOMAIN}:${DNSDOMAINIP}"
