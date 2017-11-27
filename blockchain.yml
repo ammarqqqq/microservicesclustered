@@ -3,8 +3,6 @@ version: '3.3'
 networks:
   blockchain:
     external: false
-  microservices_microservices:
-    external: true
   loadbalancer_default:
     external: true
 
@@ -25,7 +23,6 @@ services:
     domainname: monifair.com
     networks:
       - blockchain
-      - microservices_microservices
       - loadbalancer_default
     environment:
       SERVICE_NAME: ethereum
@@ -59,7 +56,6 @@ services:
     domainname: monifair.com
     networks:
       - blockchain
-      - microservices_microservices
       - loadbalancer_default
     environment:
       SERVICE_NAME: ethereum
@@ -97,7 +93,6 @@ services:
         constraints: [node.hostname  == bankinstance7-worker]
     networks:
       - blockchain
-      - microservices_microservices
       - loadbalancer_default
     container_name: netstats
     environment:
