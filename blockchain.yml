@@ -17,7 +17,7 @@ services:
       mode: replicated
       replicas: 3
       placement:
-        constraints: [node.role  ==  manager]
+        constraints: [node.hostname ==  bankinstance7-worker]
     restart: on-failure
     container_name: bootstrap
     hostname: bootstrap
@@ -42,10 +42,7 @@ services:
        - "/eth-geth-client/BlockchainEthereumFiles2/genesis.json:/root/BlockchainEthereumFiles2/genesis.json:ro"
        - "/eth-geth-client/BlockchainEthereumFiles2/keystore:/root/.ethereum/devchain/keystore:rw"
        - "/etc/localtime:/etc/localtime"
-    ports:
-      - "30306:30303"
-      - "30306:30303/udp"
-      - "8548:8545"
+
 
   ethereum:
     image: ammar2017/ethereum-gethclient
@@ -54,7 +51,7 @@ services:
       mode: replicated
       replicas: 3
       placement:
-        constraints: [node.role  ==  manager]
+        constraints: [node.hostname  == bankinstance7-worker]
     restart: on-failure
     hostname: ethereum
     domainname: monifair.com
@@ -78,9 +75,9 @@ services:
        - "/eth-geth-client/BlockchainEthereumFiles2/keystore:/root/.ethereum/devchain/keystore:rw"
        - "/etc/localtime:/etc/localtime"
     ports:
-      - "30305:30303"
-      - "30305:30303/udp"
-      - "8547:8545"
+      - "30303:30303"
+      - "30303:30303/udp"
+      - "8545:8545"
     extra_hosts:
       - "${DNSDOMAIN}:${DNSDOMAINIP}"
 
@@ -94,7 +91,7 @@ services:
       mode: replicated
       replicas: 3
       placement:
-        constraints: [node.role  ==  manager]
+        constraints: [node.hostname  == bankinstance7-worker]
     networks:
       - blockchain
       - microservices_microservices
