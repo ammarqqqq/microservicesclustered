@@ -24,21 +24,21 @@ services:
     extra_hosts:
      - "${DNSDOMAIN}:${DNSDOMAINIP}"
 
-  lb2:
-    image: ammar2017/loadbalancerswarm
-    build: ./lbSwarm
-    deploy:
-      mode: replicated
-      replicas: 2
-      placement:
-        constraints: [node.role == worker]
-    ports:
-      - "444:443"
-    environment:
-      CONSUL_URL: consul:8500
-      DNSDOMAIN: ${DNSDOMAIN}
-    restart: always
-    hostname: lb2
-    domainname: monifair.com
-    extra_hosts:
-      - "${DNSDOMAIN}:${DNSDOMAINIP}"
+#  lb2:
+#    image: ammar2017/loadbalancerswarm
+#    build: ./lbSwarm
+#    deploy:
+#      mode: replicated
+#      replicas: 2
+#      placement:
+#        constraints: [node.role == worker]
+#    ports:
+#      - "444:443"
+#    environment:
+#      CONSUL_URL: consul:8500
+#      DNSDOMAIN: ${DNSDOMAIN}
+#    restart: always
+#    hostname: lb2
+#    domainname: monifair.com
+#    extra_hosts:
+#      - "${DNSDOMAIN}:${DNSDOMAINIP}"

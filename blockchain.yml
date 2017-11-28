@@ -3,6 +3,8 @@ version: '3.3'
 networks:
   blockchain:
     external: false
+  microservices_microservices:
+    external: false
   loadbalancer_default:
     external: true
 
@@ -14,7 +16,7 @@ services:
     deploy:
       mode: replicated
       replicas: 1
-      endpoint_mode: dnsrr
+      #endpoint_mode: dnsrr
       placement:
         constraints: [node.hostname ==  bankinstance7-worker]
     restart: on-failure
@@ -23,6 +25,7 @@ services:
     domainname: monifair.com
     networks:
       - blockchain
+      - microservices_microservices
       - loadbalancer_default
     environment:
       SERVICE_NAME: ethereum
@@ -48,7 +51,7 @@ services:
     deploy:
       mode: replicated
       replicas: 1
-      endpoint_mode: dnsrr
+      #endpoint_mode: dnsrr
       placement:
         constraints: [node.hostname  == bankinstance7-worker]
     restart: on-failure
@@ -56,6 +59,7 @@ services:
     domainname: monifair.com
     networks:
       - blockchain
+      - microservices_microservices
       - loadbalancer_default
     environment:
       SERVICE_NAME: ethereum
@@ -72,10 +76,10 @@ services:
        - "/eth-geth-client/BlockchainEthereumFiles2/genesis.json:/root/BlockchainEthereumFiles2/genesis.json:ro"
        - "/eth-geth-client/BlockchainEthereumFiles2/keystore:/root/.ethereum/devchain/keystore:rw"
        - "/etc/localtime:/etc/localtime"
-    #ports:
-    #  - "30303"
-    #  - "30303/udp"
-    #  - "8545"
+    ports:
+       - "30303"
+       - "30303/udp"
+       - "8545"
     extra_hosts:
       - "${DNSDOMAIN}:${DNSDOMAINIP}"
 
@@ -93,6 +97,7 @@ services:
         constraints: [node.hostname  == bankinstance7-worker]
     networks:
       - blockchain
+      - microservices_microservices
       - loadbalancer_default
     container_name: netstats
     environment:
@@ -103,8 +108,8 @@ services:
       DNSDOMAIN: ${DNSDOMAIN}
     volumes:
       - /etc/localtime:/etc/localtime:rw
-    #ports:
-    #  - "3000"
+    ports:
+      - "3000"
     restart: on-failure
     extra_hosts:
       - "${DNSDOMAIN}:${DNSDOMAINIP}"
