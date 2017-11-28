@@ -77,9 +77,9 @@ services:
        - "/eth-geth-client/BlockchainEthereumFiles2/keystore:/root/.ethereum/devchain/keystore:rw"
        - "/etc/localtime:/etc/localtime"
     ports:
-       - "30303"
-       - "30303/udp"
-       - "8545"
+       - "30303:30303"
+       - "30303:30303/udp"
+       - "8545:8545"
     extra_hosts:
       - "${DNSDOMAIN}:${DNSDOMAINIP}"
 
@@ -92,7 +92,7 @@ services:
     deploy:
       mode: replicated
       replicas: 1
-      endpoint_mode: dnsrr
+      #endpoint_mode: dnsrr
       placement:
         constraints: [node.hostname  == bankinstance7-worker]
     networks:
@@ -109,7 +109,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:rw
     ports:
-      - "3000"
+      - "3000:3000"
     restart: on-failure
     extra_hosts:
       - "${DNSDOMAIN}:${DNSDOMAINIP}"
