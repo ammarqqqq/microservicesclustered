@@ -8,7 +8,7 @@ networks:
 
 services:
   authenticationservice:
-    image: fintechinnovation/authenticationservice
+    image: ammar2017/authenticationservice
     build: ./authenticationservice
     deploy:
       mode: replicated
@@ -35,7 +35,7 @@ services:
 
 
   backofficeservice:
-    image: fintechinnovation/backofficeservice
+    image: ammar2017/backofficeservice
     build: ./backofficeservice
     deploy:
       mode: replicated
@@ -84,7 +84,7 @@ services:
 
 
   userandaccountservice:
-    image: fintechinnovation/userandaccountservice:latest
+    image: ammar2017/userandaccountservice:latest
     build: ./userandaccountservice
     deploy:
       mode: replicated
@@ -114,7 +114,7 @@ services:
     extra_hosts:
       - "${DNSDOMAIN}:${DNSDOMAINIP}"
 
-  userredis:
+  userandaccountredis:
     image: redis
     deploy:
       mode: replicated
@@ -128,7 +128,7 @@ services:
       - microservices
       - loadbalancer_default
     environment:
-      SERVICE_NAME: userredis
+      SERVICE_NAME: userandaccountredis
       SERVICE_TAGS: production
 
   tokenredis:
@@ -183,7 +183,7 @@ services:
       SERVICE_TAGS: production
 
   socketservice:
-    image: fintechinnovation/socketservice
+    image: ammar2017/socketservice
     build: ./socketservice
     deploy:
       mode: replicated
@@ -212,7 +212,7 @@ services:
       - "${DNSDOMAIN}:${DNSDOMAINIP}"
 
   messageservice:
-    image: fintechinnovation/messageservice
+    image: ammar2017/messageservice
     build: ./messageservice
     deploy:
       mode: replicated
@@ -272,7 +272,7 @@ services:
     restart: always
 
   historyservice:
-    image: fintechinnovation/historyservice
+    image: ammar2017/historyservice
     build: ./historyservice
     deploy:
       mode: replicated
