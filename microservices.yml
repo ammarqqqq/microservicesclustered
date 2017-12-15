@@ -123,7 +123,7 @@ services:
         constraints: [node.role == manager]
     restart: always
     ports:
-      - "6378:6379"
+      - "6379"
     networks:
       - microservices
       - loadbalancer_default
@@ -140,7 +140,7 @@ services:
         constraints: [node.role == manager]
     restart: always
     ports:
-      - "6376:6379"
+      - "6379"
     networks:
       - loadbalancer_default
     environment:
@@ -156,7 +156,7 @@ services:
         constraints: [node.role == manager]
     restart: always
     ports:
-      - "6377:6379"
+      - "6379"
     networks:
       - microservices
       - loadbalancer_default
