@@ -253,7 +253,7 @@ services:
       - microservices
       - loadbalancer_default
     ports:
-      - "6374:6379"
+      - "6379"
     restart: always
 
   messageservicemongo:
