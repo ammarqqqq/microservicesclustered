@@ -174,13 +174,15 @@ services:
     command: --smallfiles
     restart: always
     ports:
-      - "27017"
+      - "27017:27017"
     networks:
       - microservices
       - loadbalancer_default
     environment:
       SERVICE_NAME: microservices_usermongo
       SERVICE_TAGS: production
+    extra_hosts:
+      - "${DNSDOMAIN}:${DNSDOMAINIP}"
 
   socketservice:
     image: ammar2017/socketservice
