@@ -4,7 +4,7 @@ networks:
   blockchain:
     external: false
   microservices_microservices:
-    external: false
+    external: true
   loadbalancer_default:
     external: true
 
