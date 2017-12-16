@@ -179,7 +179,7 @@ services:
       - microservices
       - loadbalancer_default
     environment:
-      SERVICE_NAME: usermongodb
+      SERVICE_NAME: microservices_usermongo
       SERVICE_TAGS: production
 
   socketservice:
