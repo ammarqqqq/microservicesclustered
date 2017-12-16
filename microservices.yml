@@ -174,7 +174,7 @@ services:
     command: --smallfiles
     restart: always
     ports:
-      - "27016:27017"
+      - "27017"
     networks:
       - microservices
       - loadbalancer_default
@@ -268,7 +268,7 @@ services:
       - microservices
       - loadbalancer_default
     ports:
-      - "27005:27017"
+      - "27017"
     restart: always
 
   historyservice:
@@ -307,7 +307,7 @@ services:
         constraints: [node.role == manager]
     restart: always
     ports:
-       - "27006:27017"
+       - "27017"
     networks:
       - microservices
       - loadbalancer_default
@@ -349,7 +349,7 @@ services:
        placement:
            constraints: [node.role  ==  manager]
     ports:
-      - "27012:27017"
+      - "27017"
     networks:
       - microservices
       - loadbalancer_default
@@ -365,7 +365,7 @@ services:
       placement:
         constraints: [node.role  ==  manager]
     ports:
-      - "6340:6379"
+      - "6379"
     networks:
       - microservices
       - loadbalancer_default
