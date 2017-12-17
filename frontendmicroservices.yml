@@ -7,7 +7,7 @@ networks:
 
 services:
   web:
-    image: ammar2017/web
+    image: ammar2017/web:latest
     build: ./web
     deploy:
       mode: replicated
@@ -29,7 +29,7 @@ services:
     restart: always
 
   backofficeweb:
-    image: ammar2017/backofficeweb
+    image: ammar2017/backofficeweb:latest
     build: ./backofficeweb
     deploy:
       mode: replicated
