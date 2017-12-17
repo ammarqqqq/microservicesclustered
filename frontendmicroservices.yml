@@ -4,6 +4,8 @@ networks:
     external: false
   loadbalancer_default:
     external: true
+  microservices_microservices:
+    external: true
 
 services:
   web:
@@ -17,12 +19,13 @@ services:
     networks:
       - frontend
       - loadbalancer_default
+      - microservices_microservices
     environment:
-      SERVICE_NAME: Frontendsvc_web
+      SERVICE_NAME: frontend__web
       SERVICE_TAGS: production
     ports:
       - "81:443"
-    hostname: web
+    hostname: bankinstance3
     domainname: monifair.com
     extra_hosts:
       - "${DNSDOMAIN}:${DNSDOMAINIP}"
@@ -38,14 +41,15 @@ services:
         constraints: [node.role == manager]
     restart: always
     environment:
-      SERVICE_NAME: Frontendsvc_backofficeweb
+      SERVICE_NAME: frontend_backofficeweb
       SERVICE_TAGS: production
     networks:
       - frontend
       - loadbalancer_default
+      - microservices_microservices
     ports:
       - "84:443"
-    hostname: backofficeweb
+    hostname: bankinstance3
     domainname: monifair.com
     extra_hosts:
       - "${DNSDOMAIN}:${DNSDOMAINIP}"
