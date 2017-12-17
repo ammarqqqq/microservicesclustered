@@ -174,7 +174,7 @@ services:
     command: --smallfiles
     restart: always
     ports:
-      - "27017"
+      - "27016:27017"
     networks:
       - microservices
       - loadbalancer_default
