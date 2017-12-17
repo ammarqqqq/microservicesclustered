@@ -65,7 +65,7 @@ services:
       - "${DNSDOMAIN}:${DNSDOMAINIP}"
 
   backofficemongo:
-    image: mongo:latest
+    image: fintechinnovation:mongo:latest
     command: --smallfiles
     restart: always
     ports:
@@ -165,7 +165,7 @@ services:
       SERVICE_TAGS: production
 
   usermongo:
-    image: mongo:latest
+    image: fintechinnovation:mongo:latest
     deploy:
       mode: replicated
       replicas: 3
@@ -259,7 +259,7 @@ services:
     restart: always
 
   messageservicemongo:
-    image: mongo:latest
+    image: fintechinnovation:mongo:latest
     command: --smallfiles
     deploy:
       mode: replicated
@@ -300,7 +300,7 @@ services:
       - "${DNSDOMAIN}:${DNSDOMAINIP}"
 
   historymongo:
-    image: mongo:latest
+    image: fintechinnovation:mongo:latest
     command: --smallfiles
     deploy:
       mode: replicated
@@ -344,7 +344,7 @@ services:
       - "${DNSDOMAIN}:${DNSDOMAINIP}"
 
   transactionmongo:
-    image: mongo:latest
+    image: fintechinnovation:mongo:latest
     deploy:
        mode: replicated
        replicas: 3
