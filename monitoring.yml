@@ -13,8 +13,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
-      #- 9000:9000
-      - 9000:443
+      - 9000:9000
     deploy:
       mode: replicated
       replicas: 1
@@ -38,6 +37,5 @@ services:
       - monitoring
       - loadbalancer_default
     ports:
-      #- 9090:8080
-      - 9090:443
+      - 9090:8080
     restart: always
