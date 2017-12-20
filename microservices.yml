@@ -21,7 +21,7 @@ services:
     environment:
       SERVICE_NAME: authenticationservice
       SERVICE_TAGS: production
-      NODE_ENV: development
+      NODE_ENV: production
       hostname: authenticationservice
       DNSDOMAIN: ${DNSDOMAIN}
       TRACE_SERVICE_NAME: authenticationservice
@@ -48,7 +48,7 @@ services:
     environment:
       SERVICE_NAME: backofficeservice
       SERVICE_TAGS: production
-      NODE_ENV: development
+      NODE_ENV: production
       CONSUL_ADDRESS: consul:8500
       DNSDOMAIN: ${DNSDOMAIN}
       TRACE_SERVICE_NAME: backofficeservice
@@ -100,7 +100,7 @@ services:
     environment:
       SERVICE_NAME: userandaccountservice
       SERVICE_TAGS: production
-      NODE_ENV: development
+      NODE_ENV: production
       DNSDOMAIN: ${DNSDOMAIN}
       TRACE_SERVICE_NAME: userandaccountservice
       TRACE_API_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NmY0ZDE1ZTg2OTYyMzg2NzA0NTEwOSIsImlhdCI6MTUwMDQ2NjQ1M30.r6BHvTt3RCkYsTe_U36lAED_t8xtJRKFFEgVAkN8jNE
@@ -197,7 +197,7 @@ services:
     environment:
       SERVICE_NAME: socketservice
       SERVICE_TAGS: production,iphash
-      NODE_ENV: development
+      NODE_ENV: production
       CONSUL_ADDRESS: consul:8500
       DNSDOMAIN: ${DNSDOMAIN}
       TRACE_SERVICE_NAME: socketservice
@@ -229,7 +229,7 @@ services:
     environment:
       SERVICE_NAME: messageservice
       SERVICE_TAGS: production
-      NODE_ENV: development
+      NODE_ENV: production
       DNSDOMAIN: ${DNSDOMAIN}
       TRACE_SERVICE_NAME: messageservice
       TRACE_API_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NmY0ZDE1ZTg2OTYyMzg2NzA0NTEwOSIsImlhdCI6MTUwMDQ2NjQ1M30.r6BHvTt3RCkYsTe_U36lAED_t8xtJRKFFEgVAkN8jNE
@@ -291,7 +291,7 @@ services:
     environment:
       SERVICE_NAME: historyservice
       SERVICE_TAGS: production
-      NODE_ENV: development
+      NODE_ENV: production
       CONSUL_ADDRESS: consul:8500
       DNSDOMAIN: ${DNSDOMAIN}
       TRACE_SERVICE_NAME: historyservice
@@ -340,7 +340,7 @@ services:
     environment:
       SERVICE_NAME: transactionservice
       SERVICE_TAGS: production
-      NODE_ENV: development
+      NODE_ENV: production
       DNSDOMAIN: ${DNSDOMAIN}
       CONSUL_ADDRESS: consul:8500
       TRACE_SERVICE_sNAME: transactionservice
