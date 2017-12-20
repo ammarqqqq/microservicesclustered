@@ -12,7 +12,7 @@ services:
     build: ./authenticationservice
     deploy:
       mode: replicated
-      replicas: 3
+      replicas: 1
       placement:
         constraints: [node.role == manager]
     networks:
@@ -39,7 +39,7 @@ services:
     build: ./backofficeservice
     deploy:
       mode: replicated
-      replicas: 3
+      replicas: 1
       placement:
         constraints: [node.role == manager]
     networks:
@@ -91,7 +91,7 @@ services:
     build: ./userandaccountservice
     deploy:
       mode: replicated
-      replicas: 3
+      replicas: 1
       placement:
         constraints: [node.role == manager]
     networks:
@@ -101,7 +101,6 @@ services:
       SERVICE_NAME: userandaccountservice
       SERVICE_TAGS: production
       NODE_ENV: development
-      #CONSUL_ADDRESS: consul:8500
       DNSDOMAIN: ${DNSDOMAIN}
       TRACE_SERVICE_NAME: userandaccountservice
       TRACE_API_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NmY0ZDE1ZTg2OTYyMzg2NzA0NTEwOSIsImlhdCI6MTUwMDQ2NjQ1M30.r6BHvTt3RCkYsTe_U36lAED_t8xtJRKFFEgVAkN8jNE
@@ -121,7 +120,7 @@ services:
     image: redis
     deploy:
       mode: replicated
-      replicas: 3
+      replicas: 1
       placement:
         constraints: [node.role == manager]
     restart: always
@@ -138,7 +137,7 @@ services:
     image: redis
     deploy:
       mode: replicated
-      replicas: 3
+      replicas: 1
       placement:
         constraints: [node.role == manager]
     restart: always
@@ -171,7 +170,7 @@ services:
     image: ammar2017/mongo:latest
     deploy:
       mode: replicated
-      replicas: 3
+      replicas: 1
       placement:
         constraints: [node.role == manager]
     command: --smallfiles
@@ -221,7 +220,7 @@ services:
     build: ./messageservice
     deploy:
       mode: replicated
-      replicas: 3
+      replicas: 1
       placement:
         constraints: [node.role == manager]
     networks:
@@ -251,7 +250,7 @@ services:
     image: redis
     deploy:
       mode: replicated
-      replicas: 3
+      replicas: 1
       placement:
         constraints: [node.role == manager]
     networks:
@@ -266,7 +265,7 @@ services:
     command: --smallfiles
     deploy:
       mode: replicated
-      replicas: 3
+      replicas: 1
       placement:
         constraints: [node.role == manager]
     networks:
