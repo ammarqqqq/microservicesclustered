@@ -28,7 +28,7 @@ services:
       TRACE_API_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NmY0ZDE1ZTg2OTYyMzg2NzA0NTEwOSIsImlhdCI6MTUwMDQ2NjQ1M30.r6BHvTt3RCkYsTe_U36lAED_t8xtJRKFFEgVAkN8jNE
     ports:
       - "8040:8040"
-      - "9901:9922"
+      - "9901:9901"
     restart: always
     extra_hosts:
       - "${DNSDOMAIN}:${DNSDOMAINIP}"
@@ -56,7 +56,7 @@ services:
       RABBITMQ_URL: 'amqps://rabbitmq:rabbitmq@rabbit3:5671/'
     ports:
       - "8050:8050"
-      - "9923:9922"
+      - "9923:9923"
     links:
       - backofficemongo
       - backofficetokenredis
@@ -107,7 +107,7 @@ services:
       TRACE_API_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NmY0ZDE1ZTg2OTYyMzg2NzA0NTEwOSIsImlhdCI6MTUwMDQ2NjQ1M30.r6BHvTt3RCkYsTe_U36lAED_t8xtJRKFFEgVAkN8jNE
     ports:
       - "8039:8039"
-      - "9003:9092"
+      - "9003:9003"
     restart: always
     depends_on:
       - historyservice
@@ -205,7 +205,7 @@ services:
       TRACE_API_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NmY0ZDE1ZTg2OTYyMzg2NzA0NTEwOSIsImlhdCI6MTUwMDQ2NjQ1M30.r6BHvTt3RCkYsTe_U36lAED_t8xtJRKFFEgVAkN8jNE
     ports:
       - "8038:8038"
-      - "9904:9922"
+      - "9904:9904"
     networks:
       - microservices
       - loadbalancer_default
@@ -239,7 +239,7 @@ services:
       - pushnotificationserviceredis
     ports:
       - "8037:8037"
-      - "9005:9922"
+      - "9005:9005"
     restart: always
     depends_on:
       - messageservicemongo
@@ -302,7 +302,7 @@ services:
       - loadbalancer_default
     ports:
       - "8051:8051"
-      - "9900:9922"
+      - "9900:9900"
     restart: always
     extra_hosts:
       - "${DNSDOMAIN}:${DNSDOMAINIP}"
@@ -348,7 +348,7 @@ services:
       TRACE_API_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5NmY0ZDE1ZTg2OTYyMzg2NzA0NTEwOSIsImlhdCI6MTUwMDQ2NjQ1M30.r6BHvTt3RCkYsTe_U36lAED_t8xtJRKFFEgVAkN8jNE
     ports:
       - "8020:8020"
-      - "9932:9922"
+      - "9932:9932"
     restart: always
     extra_hosts:
       - "${DNSDOMAIN}:${DNSDOMAINIP}"
