@@ -81,6 +81,8 @@ services:
     environment:
       SERVICE_NAME: backofficemongo
       SERVICE_TAGS: production
+    extra_hosts:
+      - "${DNSDOMAIN}:${DNSDOMAINIP}"
 
 
   userandaccountservice:
@@ -189,7 +191,7 @@ services:
     build: ./socketservice
     deploy:
       mode: replicated
-      replicas: 3
+      replicas: 1
       placement:
         constraints: [node.role == manager]
     environment:
@@ -272,6 +274,8 @@ services:
     ports:
       - "27015:27017"
     restart: always
+    extra_hosts:
+      - "${DNSDOMAIN}:${DNSDOMAINIP}"
 
   historyservice:
     image: ammar2017/historyservice
@@ -304,7 +308,7 @@ services:
     command: --smallfiles
     deploy:
       mode: replicated
-      replicas: 3
+      replicas: 1
       placement:
         constraints: [node.role == manager]
     restart: always
@@ -316,13 +320,15 @@ services:
     environment:
       SERVICE_NAME: historymongodb
       SERVICE_TAGS: production
+    extra_hosts:
+      - "${DNSDOMAIN}:${DNSDOMAINIP}"
 
   transactionservice:
     image: ammar2017/transactionservice
     build: ./transactionservice
     deploy:
       mode: replicated
-      replicas: 3
+      replicas: 1
       placement:
         constraints: [node.role  ==  manager]
     networks:
@@ -347,7 +353,7 @@ services:
     image: ammar2017/mongo:latest
     deploy:
        mode: replicated
-       replicas: 3
+       replicas: 1
        placement:
            constraints: [node.role  ==  manager]
     ports:
@@ -363,7 +369,7 @@ services:
     image: redis
     deploy:
       mode: replicated
-      replicas: 3
+      replicas: 1
       placement:
         constraints: [node.role  ==  manager]
     ports:
