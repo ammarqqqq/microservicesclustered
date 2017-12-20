@@ -132,6 +132,8 @@ services:
     environment:
       SERVICE_NAME: userandaccountredis
       SERVICE_TAGS: production
+    extra_hosts:
+      - "${DNSDOMAIN}:${DNSDOMAINIP}"
 
   tokenredis:
     image: redis
@@ -148,6 +150,8 @@ services:
     environment:
       SERVICE_NAME: tokenredis
       SERVICE_TAGS: production
+    extra_hosts:
+      - "${DNSDOMAIN}:${DNSDOMAINIP}"
 
   backofficetokenredis:
     image: redis
@@ -165,6 +169,8 @@ services:
     environment:
       SERVICE_NAME: backofficetokenredis
       SERVICE_TAGS: production
+    extra_hosts:
+      - "${DNSDOMAIN}:${DNSDOMAINIP}"
 
   usermongo:
     image: ammar2017/mongo:latest
@@ -259,6 +265,8 @@ services:
     ports:
       - "6371:6379"
     restart: always
+    extra_hosts:
+      - "${DNSDOMAIN}:${DNSDOMAINIP}"
 
   messageservicemongo:
     image: ammar2017/mongo:latest
