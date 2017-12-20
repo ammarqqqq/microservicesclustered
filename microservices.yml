@@ -72,7 +72,7 @@ services:
       - "27018:27017"
     deploy:
       mode: replicated
-      replicas: 3
+      replicas: 1
       placement:
         constraints: [node.role == manager]
     networks:
@@ -81,6 +81,7 @@ services:
     environment:
       SERVICE_NAME: backofficemongo
       SERVICE_TAGS: production
+      DNSDOMAIN: ${DNSDOMAIN}
     extra_hosts:
       - "${DNSDOMAIN}:${DNSDOMAINIP}"
 
@@ -274,6 +275,9 @@ services:
     ports:
       - "27015:27017"
     restart: always
+    environment:
+      SERVICE_NAME: messageservicemongo
+      SERVICE_TAGS: production
     extra_hosts:
       - "${DNSDOMAIN}:${DNSDOMAINIP}"
 
@@ -282,7 +286,7 @@ services:
     build: ./historyservice
     deploy:
       mode: replicated
-      replicas: 3
+      replicas: 1
       placement:
         constraints: [node.role == manager]
     environment:
@@ -318,7 +322,7 @@ services:
       - microservices
       - loadbalancer_default
     environment:
-      SERVICE_NAME: historymongodb
+      SERVICE_NAME: historymongo
       SERVICE_TAGS: production
     extra_hosts:
       - "${DNSDOMAIN}:${DNSDOMAINIP}"
