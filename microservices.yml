@@ -69,7 +69,7 @@ services:
     command: --smallfiles
     restart: always
     ports:
-      - "27018:27017"
+      - "27018:27018"
     deploy:
       mode: replicated
       replicas: 3
@@ -182,7 +182,7 @@ services:
     command: --smallfiles
     restart: always
     ports:
-      - "27016:27017"
+      - "27016:27016"
     networks:
       - microservices
       - loadbalancer_default
@@ -280,7 +280,7 @@ services:
       - microservices
       - loadbalancer_default
     ports:
-      - "27015:27017"
+      - "27015:27015"
     restart: always
     environment:
       SERVICE_NAME: messageservicemongo
@@ -324,7 +324,7 @@ services:
         constraints: [node.role == manager]
     restart: always
     ports:
-       - "27014:27017"
+       - "27014:27014"
     networks:
       - microservices
       - loadbalancer_default
@@ -368,7 +368,7 @@ services:
        placement:
            constraints: [node.role  ==  manager]
     ports:
-      - "27013:27017"
+      - "27013:27013"
     networks:
       - microservices
       - loadbalancer_default
