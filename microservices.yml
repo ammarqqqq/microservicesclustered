@@ -12,7 +12,7 @@ services:
     build: ./authenticationservice
     deploy:
       mode: replicated
-      replicas: 3
+      replicas: 1
       placement:
         constraints: [node.role == manager]
     networks:
@@ -39,7 +39,7 @@ services:
     build: ./backofficeservice
     deploy:
       mode: replicated
-      replicas: 3
+      replicas: 1
       placement:
         constraints: [node.role == manager]
     networks:
@@ -72,7 +72,7 @@ services:
       - "27018:27017"
     deploy:
       mode: replicated
-      replicas: 3
+      replicas: 1
       placement:
         constraints: [node.role == manager]
     networks:
@@ -91,7 +91,7 @@ services:
     build: ./userandaccountservice
     deploy:
       mode: replicated
-      replicas: 3
+      replicas: 1
       placement:
         constraints: [node.role == manager]
     networks:
@@ -120,7 +120,7 @@ services:
     image: redis
     deploy:
       mode: replicated
-      replicas: 3
+      replicas: 1
       placement:
         constraints: [node.role == manager]
     restart: always
@@ -139,7 +139,7 @@ services:
     image: redis
     deploy:
       mode: replicated
-      replicas: 3
+      replicas: 1
       placement:
         constraints: [node.role == manager]
     restart: always
@@ -157,7 +157,7 @@ services:
     image: redis
     deploy:
       mode: replicated
-      replicas: 3
+      replicas: 1
       placement:
         constraints: [node.role == manager]
     restart: always
@@ -176,7 +176,7 @@ services:
     image: ammar2017/mongo:latest
     deploy:
       mode: replicated
-      replicas: 3
+      replicas: 1
       placement:
         constraints: [node.role == manager]
     command: --smallfiles
@@ -197,7 +197,7 @@ services:
     build: ./socketservice
     deploy:
       mode: replicated
-      replicas: 3
+      replicas: 1
       placement:
         constraints: [node.role == manager]
     environment:
@@ -226,7 +226,7 @@ services:
     build: ./messageservice
     deploy:
       mode: replicated
-      replicas: 3
+      replicas: 1
       placement:
         constraints: [node.role == manager]
     networks:
@@ -256,7 +256,7 @@ services:
     image: redis
     deploy:
       mode: replicated
-      replicas: 3
+      replicas: 1
       placement:
         constraints: [node.role == manager]
     networks:
@@ -273,7 +273,7 @@ services:
     command: --smallfiles
     deploy:
       mode: replicated
-      replicas: 3
+      replicas: 1
       placement:
         constraints: [node.role == manager]
     networks:
@@ -293,7 +293,7 @@ services:
     build: ./historyservice
     deploy:
       mode: replicated
-      replicas: 3
+      replicas: 1
       placement:
         constraints: [node.role == manager]
     environment:
@@ -319,7 +319,7 @@ services:
     command: --smallfiles
     deploy:
       mode: replicated
-      replicas: 3
+      replicas: 1
       placement:
         constraints: [node.role == manager]
     restart: always
@@ -339,7 +339,7 @@ services:
     build: ./transactionservice
     deploy:
       mode: replicated
-      replicas: 3
+      replicas: 1
       placement:
         constraints: [node.role  ==  manager]
     networks:
@@ -364,7 +364,7 @@ services:
     image: ammar2017/mongo:latest
     deploy:
        mode: replicated
-       replicas: 3
+       replicas: 1
        placement:
            constraints: [node.role  ==  manager]
     ports:
@@ -380,7 +380,7 @@ services:
     image: redis
     deploy:
       mode: replicated
-      replicas: 3
+      replicas: 1
       placement:
         constraints: [node.role  ==  manager]
     ports:
